@@ -11,10 +11,9 @@ backend/.pytest_cache/
 *.sqlite3
 .env
 
-# Node / Frontend Build Artifacts
+# Node / Frontend Build Artifacts (mobile/dist is committed for zero-build Python/Render deployment)
 node_modules/
 mobile/node_modules/
-mobile/dist/
 mobile/.vite/
 *.tsbuildinfo
 npm-debug.log*
