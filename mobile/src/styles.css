@@ -2648,3 +2648,322 @@ body {
 .wa-ticks-sent {
   color: #94a3b8;
 }
+
+
+/* =========================================================
+   RESPONSIVE MOBILE, TABLET & SPLIT-SCREEN UX OVERRIDES
+   ========================================================= */
+
+body,
+#root,
+.wa-app-shell {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.wa-main-content {
+  min-height: 0;
+  min-width: 0;
+}
+
+/* Horizontal Smooth Touch Scrolling for Navigation Tabs */
+.wa-tabs {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.wa-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.wa-tab {
+  flex: 1 0 auto;
+  white-space: nowrap;
+  min-width: max-content;
+}
+
+/* Mobile Back Button in Chat/Room Header (Hidden on Desktop) */
+.wa-mobile-back-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--wa-dark-teal);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Prevent horizontal overflow on cards even on 320px viewports */
+.wa-listings-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+}
+
+.wa-directory-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+
+/* Tablet & Narrow Split-Screen Viewports (<= 920px) */
+@media (max-width: 920px) {
+  .wa-maps-layout {
+    flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .wa-map-stage-wrap {
+    flex: none;
+    height: 45dvh;
+    min-height: 290px;
+  }
+
+  .wa-map-inspector {
+    width: 100%;
+    min-width: 0;
+    border-left: none;
+    border-top: 2px solid var(--wa-border);
+    overflow-y: visible;
+    flex: none;
+  }
+
+  .wa-sidebar {
+    width: 280px;
+    min-width: 240px;
+  }
+}
+
+/* Mobile Viewports (<= 768px) — Authentic WhatsApp Mobile Single-Pane Navigation */
+@media (max-width: 768px) {
+  .wa-role-bar {
+    padding: 6px 10px;
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .wa-role-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wa-role-selector-group {
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+  }
+
+  .wa-role-label {
+    display: none;
+  }
+
+  .wa-role-pills {
+    flex-wrap: nowrap;
+  }
+
+  .wa-role-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .wa-role-bar-right {
+    flex-shrink: 0;
+  }
+
+  .wa-auth-open-btn,
+  .wa-open-peer-btn {
+    white-space: nowrap;
+    padding: 4px 9px;
+    font-size: 11px;
+  }
+
+  .wa-brand-row {
+    padding: 8px 12px;
+  }
+
+  .wa-logo-badge {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .wa-title-line h1 {
+    font-size: 16px;
+  }
+
+  .wa-subtitle {
+    font-size: 11px;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .wa-tab {
+    padding: 10px 11px;
+    font-size: 11.5px;
+    gap: 5px;
+  }
+
+  /* WhatsApp Mobile List <-> Thread View Switching */
+  .wa-mobile-back-btn {
+    display: inline-flex;
+  }
+
+  .wa-split-layout.mobile-list-active .wa-sidebar {
+    width: 100%;
+    min-width: 0;
+    border-right: none;
+    display: flex;
+  }
+
+  .wa-split-layout.mobile-list-active .wa-chat-pane {
+    display: none;
+  }
+
+  .wa-split-layout.mobile-thread-active .wa-sidebar {
+    display: none;
+  }
+
+  .wa-split-layout.mobile-thread-active .wa-chat-pane {
+    width: 100%;
+    display: flex;
+  }
+
+  .wa-chat-header {
+    padding: 8px 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .wa-chat-peer-info {
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .wa-call-trigger-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .wa-call-trigger-btn span {
+    display: none;
+  }
+
+  .wa-messages-container {
+    padding: 12px 10px;
+  }
+
+  .wa-msg-bubble {
+    max-width: 85%;
+  }
+
+  /* Community & Category Bar on Mobile */
+  .wa-community-page {
+    padding: 10px 12px;
+    gap: 12px;
+  }
+
+  .wa-community-toolbar {
+    padding: 10px 12px;
+  }
+
+  .wa-search-box {
+    min-width: 100%;
+  }
+
+  .wa-community-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .wa-create-listing-btn,
+  .wa-buyer-rbac-badge {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .wa-category-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .wa-category-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wa-cat-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Calls Tab on Mobile */
+  .wa-calls-page {
+    padding: 12px;
+  }
+
+  .wa-directory-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wa-dir-actions .wa-call-trigger-btn span {
+    display: inline;
+  }
+
+  .wa-call-log-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Modals & Form Grids on Mobile */
+  .wa-modal-overlay {
+    padding: 10px;
+    align-items: flex-end;
+  }
+
+  .wa-modal-card {
+    max-height: 90dvh;
+    overflow-y: auto;
+    padding: 16px;
+    border-radius: 16px 16px 10px 10px;
+  }
+
+  .wa-form-grid-2,
+  .wa-form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Active Call & Incoming Call Overlays on Mobile */
+  .wa-active-call-topbar {
+    padding: 10px 14px;
+  }
+
+  .wa-pip-local-container {
+    width: 128px;
+    height: 84px;
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .wa-call-controls-bar {
+    padding: 12px 10px;
+    gap: 10px;
+  }
+
+  .wa-control-btn {
+    width: 68px;
+    height: 58px;
+    font-size: 10.5px;
+  }
+}

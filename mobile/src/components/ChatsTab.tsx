@@ -8,6 +8,7 @@ import {
   PlusCircle,
   CheckCheck,
   AlertCircle,
+  ArrowLeft,
 } from 'lucide-react';
 import {
   UserProfile,
@@ -36,6 +37,8 @@ interface ChatsTabProps {
     callType: CallType,
     propertyTitle: string
   ) => void;
+  autoOpenMobileThread?: boolean;
+  onMobileThreadOpened?: () => void;
 }
 
 export const ChatsTab: React.FC<ChatsTabProps> = ({
@@ -48,6 +51,8 @@ export const ChatsTab: React.FC<ChatsTabProps> = ({
   onSendMessage,
   onStartNewConversation,
   onInitiateCall,
+  autoOpenMobileThread,
+  onMobileThreadOpened,
 }) => {
   const [inputText, setInputText] = useState('');
   const [showNewChatModal, setShowNewChatModal] = useState(false);
@@ -60,6 +65,7 @@ export const ChatsTab: React.FC<ChatsTabProps> = ({
     'Ramanagara Highway, Bengaluru'
   );
   const [modalError, setModalError] = useState<string | null>(null);
+  const [mobileViewThread, setMobileViewThread] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const selectedConversation =
@@ -70,6 +76,13 @@ export const ChatsTab: React.FC<ChatsTabProps> = ({
       ? conv.participant_2
       : conv.participant_1;
   };
+
+  useEffect(() => {
+    if (autoOpenMobileThread) {
+      setMobileViewThread(true);
+      if (onMobileThreadOpened) onMobileThreadOpened();
+    }
+  }, [autoOpenMobileThread, onMobileThreadOpened]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -102,6 +115,7 @@ export const ChatsTab: React.FC<ChatsTabProps> = ({
         newPropLocation.trim()
       );
       setShowNewChatModal(false);
+      setMobileViewThread(true);
     } catch (err: unknown) {
       setModalError(formatUserFriendlyError(err));
     }
@@ -110,7 +124,13 @@ export const ChatsTab: React.FC<ChatsTabProps> = ({
   const availablePeers = users.filter((u) => u.id !== currentUser.id);
 
   return (
-    <div className="wa-split-layout">
+    <div
+      className={`wa-split-layout ${
+        mobileViewThread && selectedConversation
+          ? 'mobile-thread-active'
+          : 'mobile-list-active'
+      }`}
+    >
       {/* Left Sidebar: 1:1 Conversations List */}
       <aside className="wa-sidebar">
         <div className="wa-sidebar-header">
@@ -154,7 +174,10 @@ export const ChatsTab: React.FC<ChatsTabProps> = ({
               return (
                 <div
                   key={conv.id}
-                  onClick={() => onSelectConversation(conv.id)}
+                  onClick={() => {
+                    onSelectConversation(conv.id);
+                    setMobileViewThread(true);
+                  }}
                   className={`wa-conv-item ${isSelected ? 'active' : ''} ${
                     unreadCount > 0 ? 'has-unread' : ''
                   }`}
@@ -239,9 +262,17 @@ export const ChatsTab: React.FC<ChatsTabProps> = ({
 
             return (
               <>
-                {/* Top Chat Header with Audio & Video Call Triggers */}
+                {/* Top Chat Header with Mobile Back Button + Audio & Video Call Triggers */}
                 <div className="wa-chat-header">
                   <div className="wa-chat-peer-info">
+                    <button
+                      type="button"
+                      className="wa-mobile-back-btn"
+                      onClick={() => setMobileViewThread(false)}
+                      aria-label="Back to conversations list"
+                    >
+                      <ArrowLeft size={18} />
+                    </button>
                     <div className="wa-avatar-wrap">
                       <div
                         className="wa-avatar"

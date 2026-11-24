@@ -77,6 +77,8 @@ export const App: React.FC = () => {
   const [selectedConversationId, setSelectedConversationId] = useState<
     string | null
   >(null);
+  const [autoOpenMobileChatThread, setAutoOpenMobileChatThread] =
+    useState(false);
   const [conversationMessages, setConversationMessages] = useState<
     Record<string, ChatMessage[]>
   >({});
@@ -619,6 +621,7 @@ export const App: React.FC = () => {
         return [conv, ...prev];
       });
       setSelectedConversationId(conv.id);
+      setAutoOpenMobileChatThread(true);
       setActiveTab('chats');
     } catch (err) {
       notify('error', formatUserFriendlyError(err));
@@ -898,6 +901,8 @@ export const App: React.FC = () => {
             onInitiateCall={(callee, callType, propTitle) =>
               startCall(callee, callType, propTitle)
             }
+            autoOpenMobileThread={autoOpenMobileChatThread}
+            onMobileThreadOpened={() => setAutoOpenMobileChatThread(false)}
           />
         )}
 

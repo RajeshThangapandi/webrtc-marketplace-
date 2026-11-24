@@ -9,6 +9,7 @@ import {
   UserPlus,
   ShieldCheck,
   AlertCircle,
+  ArrowLeft,
 } from 'lucide-react';
 import {
   UserProfile,
@@ -71,6 +72,7 @@ export const MeetingRoomsTab: React.FC<MeetingRoomsTabProps> = ({
     users.map((u) => u.id)
   );
   const [modalError, setModalError] = useState<string | null>(null);
+  const [mobileViewThread, setMobileViewThread] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const selectedRoom = rooms.find((r) => r.id === selectedRoomId) || null;
@@ -103,6 +105,7 @@ export const MeetingRoomsTab: React.FC<MeetingRoomsTabProps> = ({
         member_ids: selectedMemberIds,
       });
       setShowCreateModal(false);
+      setMobileViewThread(true);
     } catch (err: unknown) {
       setModalError(formatUserFriendlyError(err));
     }
@@ -115,7 +118,13 @@ export const MeetingRoomsTab: React.FC<MeetingRoomsTabProps> = ({
   };
 
   return (
-    <div className="wa-split-layout">
+    <div
+      className={`wa-split-layout ${
+        mobileViewThread && selectedRoom
+          ? 'mobile-thread-active'
+          : 'mobile-list-active'
+      }`}
+    >
       {/* Left Sidebar: Meeting Rooms List */}
       <aside className="wa-sidebar">
         <div className="wa-sidebar-header">
@@ -143,7 +152,10 @@ export const MeetingRoomsTab: React.FC<MeetingRoomsTabProps> = ({
             return (
               <div
                 key={room.id}
-                onClick={() => onSelectRoom(room.id)}
+                onClick={() => {
+                  onSelectRoom(room.id);
+                  setMobileViewThread(true);
+                }}
                 className={`wa-conv-item ${isSelected ? 'active' : ''}`}
                 data-testid={`room-item-${room.id}`}
               >
@@ -200,6 +212,14 @@ export const MeetingRoomsTab: React.FC<MeetingRoomsTabProps> = ({
           <>
             <div className="wa-chat-header">
               <div className="wa-chat-peer-info">
+                <button
+                  type="button"
+                  className="wa-mobile-back-btn"
+                  onClick={() => setMobileViewThread(false)}
+                  aria-label="Back to meeting rooms list"
+                >
+                  <ArrowLeft size={18} />
+                </button>
                 <div className="wa-avatar" style={{ backgroundColor: '#075E54' }}>
                   <Users size={20} />
                 </div>
