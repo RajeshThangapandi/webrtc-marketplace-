@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "LandConnect",
+    "slug": "landconnect-marketplace",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#075E54",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "si.landconnect.mobile",
+      "infoPlist": {
+        "NSCameraUsageDescription": "LandConnect requires camera access for in-app video calls and live land plot walkthroughs.",
+        "NSMicrophoneUsageDescription": "LandConnect requires microphone access for in-app audio and video calls between buyers, sellers, and brokers.",
+        "NSLocationWhenInUseUsageDescription": "LandConnect uses your location to geotag and discover nearby land listings."
+      }
+    },
+    "android": {
+      "package": "si.landconnect.mobile",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION"
+      ]
+    }
+  }
+}
